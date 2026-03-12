@@ -100,7 +100,7 @@ align-items: center;
   border-color: #ff3b30;      
   box-shadow: 0 4px 10px rgba(0,0,0,0.15); 
 }
-ol {
+#products {
   padding-left: 0;         
   list-style: none;        
   counter-reset: item;      /* for custom numbering */
@@ -151,4 +151,16 @@ li::after {
 
 li:hover::after {
   width: 100%;
+}
+
+/* css for the ordered list here   */
+/* USERS CSS HERE  */
+
+#users{
+  display: flex;
+  justify-content: flex-end;
+  align-items: start;
+  flex-direction: column;
+    list-style: none;
+    counter-reset: item;
 }

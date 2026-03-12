@@ -63,3 +63,51 @@ search.addEventListener("keyup",()=>{
         }
     })
 })
+
+// THIS IS THE USAGE OF CLOSURE 
+
+// we take number as an argument and multiplies it with another number 
+function makeMultiplier(n) {
+    return function(x) {
+        return x * n;
+    };
+}
+
+const multiplyBy3 = makeMultiplier(3); //we set the initial n or value or argument as 3
+console.log(multiplyBy3(5)); //return 15
+
+// nby using this our argument value is secure and can't used in the global
+
+
+
+//this is for the api call and error catch and loading
+const status = document.getElementById("status")
+const usersList = document.getElementById("users")
+
+async function fetchUsers() {
+    status.textContent = "Loading users...";
+    try {
+        const res = await fetch("https://dummyjson.com/users")
+        if(!res.ok){
+              throw new Error("Api call failed.")
+        }
+
+        const data = await res.json()
+
+          console.log(data)
+       
+    status.textContent = "";
+
+    data.users.forEach(user=>{
+        const li = document.createElement("li")
+        li.textContent = user.firstName + " " + user.lastName;
+        usersList.appendChild(li)
+    })
+        
+    } catch (error) {
+          console.log(error)
+          
+    status.textContent = "Error: "+ error.message;
+    }
+}
+fetchUsers()
