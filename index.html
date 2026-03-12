@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+
+    <!-- this is the contact form to help you get in contact with us  -->
+    <section class="contact">
+      <h2>Contact Us</h2>
+
+      <form onsubmit="validationForm(event)">
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" />
+        <span class="error" id="name-error"></span>
+
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" />
+        <span class="error" id="email-error"></span>
+
+        <label for="message">Messages:</label>
+        <textarea name="message" id="message"></textarea>
+        <span class="error" id="message-error"></span>
+
+        <button type="submit">Send Message</button>
+      </form>
+    </section>
+
+
+    <!-- this section is for the input search thingii -->
+    <section class="input-div">
+      <input type="text" id="search" placeholder="Search products..." />
+      <ol id="products">
+        <li>Nike Shoes</li>
+        <li>Adidas Jacket</li>
+        <li>Puma Sneakers</li>
+        <li>Nike Hoodie</li>
+        <li>Reebok T-shirt</li>
+        <li>Under Armour Shorts</li>
+        <li>New Balance Running Shoes</li>
+        <li>Converse High Tops</li>
+        <li>Vans Slip-ons</li>
+        <li>Fila Sweatpants</li>
+        <li>Columbia Rain Jacket</li>
+        <li>The North Face Backpack</li>
+        <li>Patagonia Beanie</li>
+        <li>Asics Running Shoes</li>
+        <li>Skechers Casual Shoes</li>
+        <li>Jordan Cap</li>
+        <li>Adidas Track Pants</li>
+        <li>Puma Sports Bra</li>
+        <li>Reebok Hoodie</li>
+        <li>Nike Socks</li>
+      </ol>
+    </section>
+    <script src="app.js"></script>
+  </body>
+</html>
