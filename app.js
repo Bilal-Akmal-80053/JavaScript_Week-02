@@ -111,3 +111,48 @@ async function fetchUsers() {
     }
 }
 fetchUsers()
+
+
+
+// this code is for the debounce related code 
+
+const input = document.getElementById("searchInput");
+const results = document.getElementById("results");
+
+
+function debounce(fn, delay) {
+  let timer;
+
+  return function (...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      fn.apply(this, args);
+    }, delay);
+  };
+}
+
+// Restore saved search
+const savedQuery = localStorage.getItem("searchQuery");
+if (savedQuery) {
+  input.value = savedQuery;
+  performSearch(savedQuery);
+}
+
+// Actual search function
+function performSearch(query) {
+  console.log("Searching for:", query);
+
+  // simulate API call
+  results.innerHTML = `Results for: ${query}`;
+}
+
+// Debounced version
+const debouncedSearch = debounce((query) => {
+  localStorage.setItem("searchQuery", query); // persistence
+  performSearch(query);
+}, 500);
+
+// Input listener
+input.addEventListener("input", (e) => {
+  debouncedSearch(e.target.value);
+});
