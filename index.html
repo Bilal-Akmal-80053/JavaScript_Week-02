@@ -11,7 +11,7 @@
     <section class="contact">
       <h2>Contact Us</h2>
 
-      <form onsubmit="validationForm(event)">
+      <form id="validationForm">
         <label for="name">Name:</label>
         <input type="text" name="name" id="name" />
         <span class="error" id="name-error"></span>
@@ -28,43 +28,17 @@
       </form>
     </section>
 
-    <!-- this section is for the input search thingii -->
-    <section class="input-div">
-      <input type="text" id="search" placeholder="Search products..." />
-      <ol id="products">
-        <li>Nike Shoes</li>
-        <li>Adidas Jacket</li>
-        <li>Puma Sneakers</li>
-        <li>Nike Hoodie</li>
-        <li>Reebok T-shirt</li>
-        <li>Under Armour Shorts</li>
-        <li>New Balance Running Shoes</li>
-        <li>Converse High Tops</li>
-        <li>Vans Slip-ons</li>
-        <li>Fila Sweatpants</li>
-        <li>Columbia Rain Jacket</li>
-        <li>The North Face Backpack</li>
-        <li>Patagonia Beanie</li>
-        <li>Asics Running Shoes</li>
-        <li>Skechers Casual Shoes</li>
-        <li>Jordan Cap</li>
-        <li>Adidas Track Pants</li>
-        <li>Puma Sports Bra</li>
-        <li>Reebok Hoodie</li>
-        <li>Nike Socks</li>
-      </ol>
-    </section>
-
-    <!-- this code here is for the api fetchign data and loading and showing error states -->
-    <section style="border-top: 3px solid black;">
-      <h2 style="padding-left: 89px;">Users</h2>
+    
+    <!-- this is for the debounce and stuff -->
+    <div id="debounce-div">
+      <h2>Search Users</h2>
+      <input type="text" id="searchInput" placeholder="Search users..." />
+      
       <div id="status"></div>
       <ol id="users"></ol>
-    </section>
+    </div>
 
-    <!-- this is for the debounce and stuff -->
-     <input type="text" id="searchInput" placeholder="Search..." />
-<div id="results"></div>
-    <script src="app.js"></script>
+
+    <script type="module" src="app.js"></script>
   </body>
 </html>

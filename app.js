@@ -1,125 +1,51 @@
-// this is the code related to the validation for the form /
+//  util imports here 
+import { validationForm } from "./utils/validateForm.js";
+import { getUsers } from "./utils/api.js";
+// form dom here 
+const form = document.getElementById("validationForm");
+form.addEventListener("submit", validationForm);
 
-let validationForm = (e)=>{
+// here we get status upper lsit and inpout dfrom the dom 
+const status = document.getElementById("status");
+const usersList = document.getElementById("users");
+const input = document.getElementById("searchInput");
 
-e.preventDefault()
+// STATE
+let allUsers = [];
 
-let isValid = true
-let name = document.getElementById("name")
-let email = document.getElementById("email").value
-let message = document.getElementById("message")
-let nameError = document.getElementById("name-error")
-let emailError = document.getElementById("email-error")
-let messageError = document.getElementById("message-error")
+// this helps us render the li items, it takes users as the args and display them by creating new li
+function renderUsers(users) {
+  usersList.innerHTML = "";
 
-if(name.value.length<3){
-nameError.innerText = "Name should be at least 3 char long."
-isValid = false;
-}else{
-    nameError.innerText = ""
+  if (users.length === 0) {
+    usersList.innerHTML = "<li>No users found</li>";
+    return;
+  }
+
+  users.forEach((user) => {
+    const li = document.createElement("li");
+    li.textContent = `${user.firstName} ${user.lastName}`;
+    usersList.appendChild(li);
+  });
 }
 
-if(email.includes("@") && email.includes(".")){
-    emailError.innerText = ""
-}else{
-emailError.innerText = "Email format should be correct."
+// This loadUsers just loads the api or fetches the user form api using that api.js utils
+async function loadUsers() {
+  status.textContent = "Loading users...";
 
-isValid = false;
-}
-
-if(message.value.length===0){
-messageError.innerText = "Message field is required."
-
-isValid = false;
-}else{
-    messageError.innerText = ""
-}
-
-if(isValid){
-    alert("Form submitted successfully.")
-}
-
-}
-
-
-
-
-
-
-
-// this code is related to search concepts using javascript//
-let search = document.getElementById("search")
-
-search.addEventListener("keyup",()=>{
-    let value = search.value.toLowerCase()
-    let products = document.querySelectorAll("#products li")
-
-    products.forEach(product=>{
-        let productValue = product.innerHTML.toLocaleLowerCase();
-        if(productValue.includes(value)){
-            product.style.display = "block"
-        }else{
-            product.style.display = "none"
-        }
-    })
-})
-
-// THIS IS THE USAGE OF CLOSURE 
-
-// we take number as an argument and multiplies it with another number 
-function makeMultiplier(n) {
-    return function(x) {
-        return x * n;
-    };
-}
-
-const multiplyBy3 = makeMultiplier(3); //we set the initial n or value or argument as 3
-console.log(multiplyBy3(5)); //return 15
-
-// nby using this our argument value is secure and can't used in the global
-
-
-
-//this is for the api call and error catch and loading
-const status = document.getElementById("status")
-const usersList = document.getElementById("users")
-
-async function fetchUsers() {
-    status.textContent = "Loading users...";
-    try {
-        const res = await fetch("https://dummyjson.com/users")
-        if(!res.ok){
-              throw new Error("Api call failed.")
-        }
-
-        const data = await res.json()
-
-          console.log(data)
-       
+  try {
+    allUsers = await getUsers(); 
     status.textContent = "";
 
-    data.users.forEach(user=>{
-        const li = document.createElement("li")
-        li.textContent = user.firstName + " " + user.lastName;
-        usersList.appendChild(li)
-    })
-        
-    } catch (error) {
-          console.log(error)
-          
-    status.textContent = "Error: "+ error.message;
-    }
+    renderUsers(allUsers);
+  } catch (error) {
+    status.textContent = "Error: " + error.message;
+  }
 }
-fetchUsers()
 
+loadUsers();
 
-
-// this code is for the debounce related code 
-
-const input = document.getElementById("searchInput");
-const results = document.getElementById("results");
-
-
+// this is the actual debounce funciton that help us with any kindl of delay and using the callbacks
 function debounce(fn, delay) {
   let timer;
 
@@ -131,28 +57,30 @@ function debounce(fn, delay) {
   };
 }
 
-// Restore saved search
+// this function performs the serach that whatever user types in her ewe does that search funtion here 
+function performSearch(query) {
+  const filteredUsers = allUsers.filter((user) => {
+    const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
+    return fullName.includes(query.toLowerCase());
+  });
+
+  renderUsers(filteredUsers);
+}
+
+// this function uses the debounce functiuona and to set the local storage and perform serach function every 500 milli seond later
+const debouncedSearch = debounce((query) => {
+  localStorage.setItem("searchQuery", query);
+  performSearch(query);
+}, 500);
+
+// to restore the serach when the user open the web after some time
 const savedQuery = localStorage.getItem("searchQuery");
 if (savedQuery) {
   input.value = savedQuery;
   performSearch(savedQuery);
 }
 
-// Actual search function
-function performSearch(query) {
-  console.log("Searching for:", query);
-
-  // simulate API call
-  results.innerHTML = `Results for: ${query}`;
-}
-
-// Debounced version
-const debouncedSearch = debounce((query) => {
-  localStorage.setItem("searchQuery", query); // persistence
-  performSearch(query);
-}, 500);
-
-// Input listener
+// inout addevent listener for the debounce search
 input.addEventListener("input", (e) => {
   debouncedSearch(e.target.value);
 });

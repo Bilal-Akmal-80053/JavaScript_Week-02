@@ -1,8 +1,9 @@
 body{
     margin: 0px;
     padding: 0px;
+    
+  font-family: "Helvetica Neue", Arial, sans-serif;
 }
-
 /* this is the css for the form  */
 
 /* contact form css here  */
@@ -103,54 +104,20 @@ align-items: center;
 #products {
   padding-left: 0;         
   list-style: none;        
-  counter-reset: item;      /* for custom numbering */
 }
 
 li {
-  position: relative;       /* needed for custom numbers */
-  margin: 15px 0;           /* spacing between items */
-  padding-left: 40px;       /* space for custom number */
+  margin: 15px 0;           
+  padding-left: 40px;      
   font-size: 16px;
   color: #333;
   cursor: pointer;
   transition: transform 0.3s ease, color 0.3s ease;
 }
 
-li::before {
-  counter-increment: item;
-  content: counter(item);
-  position: absolute;
-  left: 0;
-  top: 0;
-  font-weight: bold;
-  color: #ff3b30;           /* Nike-style accent color */
-  font-size: 18px;
-  transition: transform 0.3s ease, color 0.3s ease;
-}
-
 li:hover {
-  color: #000;               /* text becomes darker */
-  transform: translateX(10px); /* slight slide for interactivity */
-}
-
-li:hover::before {
-  color: #111;               /* number color changes too */
-  transform: scale(1.2);     /* number grows slightly */
-}
-
-li::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -3px;
-  width: 0;
-  height: 2px;
-  background: #595959; /* accent color */
-  transition: width 0.3s ease;
-}
-
-li:hover::after {
-  width: 100%;
+  color: #000;               
+  transform: translateX(10px); 
 }
 
 /* css for the ordered list here   */
@@ -162,5 +129,20 @@ li:hover::after {
   align-items: start;
   flex-direction: column;
     list-style: none;
-    counter-reset: item;
+}
+
+/* this css for the debounce div and inpiuts  */
+#debounce-div{
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: 3px solid black;
+    margin-top: 20px;
+}
+
+#searchInput{
+  margin-top: 10px;
+}
+#results{
+  margin-top: 10px;
 }
